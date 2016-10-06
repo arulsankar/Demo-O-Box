@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?fileVersion 4.0.0?><cproject storage_type_id="org.eclipse.cdt.core.XmlProjectDescriptionStorage">
+	<storageModule moduleId="org.eclipse.cdt.core.settings">
+		<cconfiguration id="0.1720864696">
+			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="0.1720864696" moduleId="org.eclipse.cdt.core.settings" name="Default">
+				<externalSettings/>
+				<extensions>
+					<extension id="org.eclipse.cdt.core.ELF" point="org.eclipse.cdt.core.BinaryParser"/>
+					<extension id="org.eclipse.cdt.core.GASErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.GmakeErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.GLDErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.CWDLocator" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.GCCErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+				</extensions>
+			</storageModule>
+			<storageModule moduleId="cdtBuildSystem" version="4.0.0">
+				<configuration artifactName="${ProjName}" buildProperties="" description="" errorParsers="org.eclipse.cdt.core.GASErrorParser;org.eclipse.cdt.core.GLDErrorParser;org.eclipse.cdt.core.GCCErrorParser;org.eclipse.cdt.core.GmakeErrorParser;org.eclipse.cdt.core.CWDLocator" id="0.1720864696" name="Default" parent="org.eclipse.cdt.build.core.prefbase.cfg">
+					<folderInfo id="0.1720864696." name="/" resourcePath="">
+						<toolChain errorParsers="" id="cdt.managedbuild.toolchain.gnu.cross.base.962109950" name="Cross GCC" superClass="cdt.managedbuild.toolchain.gnu.cross.base">
+							<option id="cdt.managedbuild.option.gnu.cross.prefix.2135041715" name="Prefix" superClass="cdt.managedbuild.option.gnu.cross.prefix"/>
+							<option id="cdt.managedbuild.option.gnu.cross.path.46345423" name="Path" superClass="cdt.managedbuild.option.gnu.cross.path"/>
+							<targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.ELF" id="cdt.managedbuild.targetPlatform.gnu.cross.688631949" isAbstract="false" osList="all" superClass="cdt.managedbuild.targetPlatform.gnu.cross"/>
+							<builder errorParsers="org.eclipse.cdt.core.GmakeErrorParser;org.eclipse.cdt.core.CWDLocator" id="cdt.managedbuild.builder.gnu.cross.1441323076" keepEnvironmentInBuildfile="false" managedBuildOn="false" name="Gnu Make Builder" superClass="cdt.managedbuild.builder.gnu.cross"/>
+							<tool errorParsers="org.eclipse.cdt.core.GCCErrorParser" id="cdt.managedbuild.tool.gnu.cross.c.compiler.471147893" name="Cross GCC Compiler" superClass="cdt.managedbuild.tool.gnu.cross.c.compiler">
+								<option id="gnu.c.compiler.option.include.paths.930561039" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" valueType="includePath">
+									<listOptionValue builtIn="false" value="/usr/include/c++/5"/>
+									<listOptionValue builtIn="false" value="/usr/include/c++/5/backward"/>
+									<listOptionValue builtIn="false" value="/usr/local/include"/>
+									<listOptionValue builtIn="false" value="/usr/include"/>
+									<listOptionValue builtIn="false" value="/usr/include/x86_64-linux-gnu"/>
+									<listOptionValue builtIn="false" value="/usr/include/x86_64-linux-gnu/c++/5"/>
+									<listOptionValue builtIn="false" value="/usr/lib/gcc/x86_64-linux-gnu/5/include"/>
+									<listOptionValue builtIn="false" value="/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed"/>
+									<listOptionValue builtIn="false" value="/home/embedded/Downloads/Cubie_Backup/OBox_backup_20160328/OBox_Cubie/open-zwave/cpp/src/command_classes"/>
+									<listOptionValue builtIn="false" value="/home/embedded/Downloads/Cubie_Backup/OBox_backup_20160328/OBox_Cubie/open-zwave/cpp/src"/>
+									<listOptionValue builtIn="false" value="/home/embedded/Downloads/Cubie_Backup/OBox_backup_20160328/OBox_Cubie/open-zwave/cpp/src/aes"/>
+									<listOptionValue builtIn="false" value="/home/embedded/Downloads/Cubie_Backup/OBox_backup_20160328/OBox_Cubie/open-zwave/cpp/tinyxml"/>
+									<listOptionValue builtIn="false" value="/home/embedded/Downloads/Cubie_Backup/OBox_backup_20160328/OBox_Cubie/open-zwave/cpp/src/platform"/>
+									<listOptionValue builtIn="false" value="/home/embedded/Downloads/Cubie_Backup/OBox_backup_20160328/OBox_Cubie/open-zwave/cpp/src/value_classes"/>
+								</option>
+								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.731660392" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
+							</tool>
+							<tool errorParsers="org.eclipse.cdt.core.GCCErrorParser" id="cdt.managedbuild.tool.gnu.cross.cpp.compiler.451732244" name="Cross G++ Compiler" superClass="cdt.managedbuild.tool.gnu.cross.cpp.compiler">
+								<option id="gnu.cpp.compiler.option.include.paths.1248820687" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
+									<listOptionValue builtIn="false" value="/usr/include/c++/5"/>
+									<listOptionValue builtIn="false" value="/usr/include/c++/5/backward"/>
+									<listOptionValue builtIn="false" value="/usr/include"/>
+									<listOptionValue builtIn="false" value="/usr/local/include"/>
+									<listOptionValue builtIn="false" value="/usr/include/x86_64-linux-gnu"/>
+									<listOptionValue builtIn="false" value="/usr/include/x86_64-linux-gnu/c++/5"/>
+									<listOptionValue builtIn="false" value="/usr/lib/gcc/x86_64-linux-gnu/5/include"/>
+									<listOptionValue builtIn="false" value="/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed"/>
+									<listOptionValue builtIn="false" value="/home/embedded/Downloads/Cubie_Backup/OBox_backup_20160328/OBox_Cubie/open-zwave/cpp/src/command_classes"/>
+									<listOptionValue builtIn="false" value="/home/embedded/Downloads/Cubie_Backup/OBox_backup_20160328/OBox_Cubie/open-zwave/cpp/src"/>
+									<listOptionValue builtIn="false" value="/home/embedded/Downloads/Cubie_Backup/OBox_backup_20160328/OBox_Cubie/open-zwave/cpp/src/aes"/>
+									<listOptionValue builtIn="false" value="/home/embedded/Downloads/Cubie_Backup/OBox_backup_20160328/OBox_Cubie/open-zwave/cpp/tinyxml"/>
+									<listOptionValue builtIn="false" value="/home/embedded/Downloads/Cubie_Backup/OBox_backup_20160328/OBox_Cubie/open-zwave/cpp/src/platform"/>
+									<listOptionValue builtIn="false" value="/home/embedded/Downloads/Cubie_Backup/OBox_backup_20160328/OBox_Cubie/open-zwave/cpp/src/value_classes"/>
+								</option>
+								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.45456451" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
+							</tool>
+							<tool id="cdt.managedbuild.tool.gnu.cross.c.linker.145303563" name="Cross GCC Linker" superClass="cdt.managedbuild.tool.gnu.cross.c.linker"/>
+							<tool errorParsers="org.eclipse.cdt.core.GLDErrorParser" id="cdt.managedbuild.tool.gnu.cross.cpp.linker.1532581482" name="Cross G++ Linker" superClass="cdt.managedbuild.tool.gnu.cross.cpp.linker">
+								<inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.537311349" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
+									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
+									<additionalInput kind="additionalinput" paths="$(LIBS)"/>
+								</inputType>
+							</tool>
+							<tool id="cdt.managedbuild.tool.gnu.cross.archiver.296778684" name="Cross GCC Archiver" superClass="cdt.managedbuild.tool.gnu.cross.archiver"/>
+							<tool errorParsers="org.eclipse.cdt.core.GASErrorParser" id="cdt.managedbuild.tool.gnu.cross.assembler.1664551982" name="Cross GCC Assembler" superClass="cdt.managedbuild.tool.gnu.cross.assembler">
+								<option id="gnu.both.asm.option.include.paths.1927909706" name="Include paths (-I)" superClass="gnu.both.asm.option.include.paths" valueType="includePath">
+									<listOptionValue builtIn="false" value="/usr/include/c++/5"/>
+									<listOptionValue builtIn="false" value="/usr/include/c++/5/backward"/>
+									<listOptionValue builtIn="false" value="/usr/include/x86_64-linux-gnu"/>
+									<listOptionValue builtIn="false" value="/usr/include/x86_64-linux-gnu/c++/5"/>
+									<listOptionValue builtIn="false" value="/usr/lib/gcc/x86_64-linux-gnu/5/include"/>
+									<listOptionValue builtIn="false" value="/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed"/>
+									<listOptionValue builtIn="false" value="/home/embedded/Downloads/Cubie_Backup/OBox_backup_20160328/OBox_Cubie/open-zwave/cpp/src/command_classes"/>
+									<listOptionValue builtIn="false" value="/home/embedded/Downloads/Cubie_Backup/OBox_backup_20160328/OBox_Cubie/open-zwave/cpp/src"/>
+									<listOptionValue builtIn="false" value="/home/embedded/Downloads/Cubie_Backup/OBox_backup_20160328/OBox_Cubie/open-zwave/cpp/src/aes"/>
+									<listOptionValue builtIn="false" value="/home/embedded/Downloads/Cubie_Backup/OBox_backup_20160328/OBox_Cubie/open-zwave/cpp/tinyxml"/>
+									<listOptionValue builtIn="false" value="/home/embedded/Downloads/Cubie_Backup/OBox_backup_20160328/OBox_Cubie/open-zwave/cpp/src/platform"/>
+									<listOptionValue builtIn="false" value="/home/embedded/Downloads/Cubie_Backup/OBox_backup_20160328/OBox_Cubie/open-zwave/cpp/src/value_classes"/>
+								</option>
+								<inputType id="cdt.managedbuild.tool.gnu.assembler.input.1862177356" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
+							</tool>
+						</toolChain>
+					</folderInfo>
+				</configuration>
+			</storageModule>
+			<storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
+		</cconfiguration>
+	</storageModule>
+	<storageModule moduleId="cdtBuildSystem" version="4.0.0">
+		<project id="OpenZwaveControlPanel.null.281740851" name="OpenZwaveControlPanel"/>
+	</storageModule>
+	<storageModule moduleId="org.eclipse.cdt.core.LanguageSettingsProviders"/>
+	<storageModule moduleId="refreshScope" versionNumber="2">
+		<configuration configurationName="Default">
+			<resource resourceType="PROJECT" workspacePath="/OpenZwaveControlPanel"/>
+		</configuration>
+	</storageModule>
+	<storageModule moduleId="scannerConfiguration">
+		<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
+		<scannerConfigBuildInfo instanceId="0.1623911569">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
+		</scannerConfigBuildInfo>
+		<scannerConfigBuildInfo instanceId="0.1720864696">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
+		</scannerConfigBuildInfo>
+		<scannerConfigBuildInfo instanceId="0.1720864696;0.1720864696.;cdt.managedbuild.tool.gnu.cross.c.compiler.471147893;cdt.managedbuild.tool.gnu.c.compiler.input.731660392">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
+		</scannerConfigBuildInfo>
+		<scannerConfigBuildInfo instanceId="0.1720864696;0.1720864696.;cdt.managedbuild.tool.gnu.cross.cpp.compiler.451732244;cdt.managedbuild.tool.gnu.cpp.compiler.input.45456451">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
+		</scannerConfigBuildInfo>
+		<scannerConfigBuildInfo instanceId="0.109677102">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
+		</scannerConfigBuildInfo>
+	</storageModule>
+	<storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings"/>
+</cproject>

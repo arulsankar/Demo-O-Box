@@ -1,0 +1,998 @@
+<html>
+<head>
+<style>
+.btn-circle, .btn-circle-3d
+{
+  border-radius: 50% !important;
+}
+.btn-new{
+width: 56px !important;
+height: 56px !important;
+padding:0px 0px 0px 0px !important;
+}
+.btn-table{
+width: 33px !important;
+height: 33px !important;
+padding:0px 0px 0px 0px !important;
+}
+.btn-primary.btn-circle{
+  -webkit-box-shadow: 0px 2px 5px grey !important;
+  -moz-box-shadow:    0px 2px 5px grey !important;
+  box-shadow:         0px 2px 5px grey !important;
+}
+.test_fb_div, button
+{
+background-color: #3a5795;
+border: 2px solid black;
+height: 100px;
+border-radius: 5px 5px 5px 5px;
+color: white;
+}
+.dropdown-toggle:hover
+{
+background-color:#0099ff !important;
+}
+.nav.navbar-nav.navbar-right  > .dropdown.open > a {
+background-color:transparent !important;
+}
+ul.dropdown-menu.custom-menu li 
+{
+    border-bottom: 1px solid #ccc;
+    padding: 2px;
+}
+ul.dropdown-menu.custom-menu li:last-child
+{
+border-bottom: none !important
+}
+ul.dropdown-menu.custom-menu li:hover 
+{
+    background:#ddd;
+    cursor: pointer;
+}
+ul.dropdown-menu.custom-menu li a
+{
+padding-left: 10px !important;
+}
+ul.dropdown-menu.custom-menu li a:hover
+{
+background: none !important;
+}
+ul.dropdown-menu.custom-menu li div 
+{
+    float: left;
+}
+ul.dropdown-menu.custom-menu li div:nth-child(odd)
+{
+   width: 30%;
+   padding-left: 10px;
+}
+ul.dropdown-menu.custom-menu li div:nth-child(even)
+{
+   width: 70%
+}
+ul.dropdown-menu.custom-menu 
+{
+   padding: 0px !important;
+    min-width: 250px
+}
+h1
+{
+color: white; 
+margin:auto;
+line-height:80px;
+text-align:center;
+border-radius: 5px 5px 5px 5px;
+}
+p
+{
+color: black;
+text-align:center;
+border-radius: 5px 5px 5px 5px;
+}
+.test_login_div
+{
+background-color: #e5e5e5;
+border: 2px solid #3a5795;
+border-radius: 5px;
+bottom: 21px;
+height: 422px;
+left: 0;
+margin: auto;
+position: absolute;
+right: 0;
+top: 108px;
+width: 1000px;
+overflow:scroll;
+}
+table{
+text-align:center;
+font-size: 15px;
+color: #3a5795;
+box-shadow: 0 0 10px grey;
+}
+th , td { 
+   border: 1px solid #3a5795; 
+   border-collapse: collapse; 
+   padding: 5px; 
+} 
+th
+{
+  background-color: #0099ff;
+  color: white;
+}
+table tr:nth-child(odd) { 
+   background-color: #f2f2f2 !important; 
+} 
+table tr:nth-child(even) { 
+   background-color: #ffffff !important; 
+}
+button
+{
+background-color: black;
+height: 30px;
+color: white;
+border-radius: 5px 5px 5px 5px;
+}
+.navbar
+{
+background-color: #0099ff !important;
+box-shadow: 0px 0px 6px grey !important;
+}
+#adminops
+{
+box-shadow: 0px 0px 8px grey !important;
+}
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.switch input {display:none;}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #2196F3;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+.modal-bg 
+{
+    position: fixed;
+    min-height: 100%;
+    min-width: 100%;
+    z-index: 9999;
+    top: 0;
+    left: 0;
+        overflow-x:hidden;
+        overflow-y:hidden;
+}
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.2.43/jquery.form-validator.min.js"></script>
+<script type="text/javascript" src="controlpanel"></script>
+<link rel="icon" href="favicon.png" type="image/x-icon">
+<link rel="shortcut icon" href="favicon.png" type="image/x-icon">
+<!-- Bootstrap setup -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<title>O'Box</title>
+</head>
+<body onload="return DoDevPost('open');" onmousemove="PosToolTip(event);">
+ <div class="navbar navbar-default navbar-static-top">
+      <div class="container">
+        <div class="navbar-header pull-left">     
+        <span class="navbar-brand" style="color:white !important;">Dashboard</span>
+        </div>
+        <ul class="nav navbar-nav navbar-right" style="height:0px !important;">
+           <li class="">
+             <a style="cursor:pointer;color:white !important" onclick="return open_connect_modal();">Connect O Box</i></a>
+           </li>
+	   <li class="">
+             <a style="cursor:pointer;color:white !important" onclick="return open_add_modal();">Add O Box</a>
+           </li>
+           &nbsp;&nbsp;&nbsp;
+            <li class="dropdown">
+                <a id="userNameDropdown" class="dropdown-toggle" data-toggle="dropdown" style="color:white;" role="button" aria-haspopup="true" aria-expanded="true">
+                    <span class="user_name"></span>
+                    <span class="caret" style="display:none;"></span>
+                </a>
+                <ul class="dropdown-menu custom-menu" aria-labelledby="drop3">
+                    <li class="clearfix">
+                       <div>email</div>
+                       <div class="user_email"></div>
+                    </li>
+                    <li  class="clearfix" >
+                       <div>phone</div>
+                       <div class="user_phone"></div>
+                    </li>
+                    <li ><a id="logoutBtn" class="user-action-list" href="https://obox-1271.appspot.com/">logout</a></li>
+               </ul>
+           </li>
+        </ul>
+    </div>
+ </div>
+<div class="container-fluid" style="display:none;">
+            <div class="col-xs-6 col-sm-4">
+                <legend>Controller Interface</legend>
+                <form class="form-horizontal" name="DevPost" method="post">
+                    <input name="devhidden" class="hide" value="hidden">
+                    <div class="form-group form-group-sm">
+                        <label class="col-sm-4 control-label" for="devname">Device name</label>
+                        <div class="col-sm-8">
+                            <input class="form-control" type="text" name="devname" id="devname" value="/dev/ttyACM0">
+                        </div>
+                    </div>
+                    <div class="form-group form-group-sm">
+                        <label class="col-sm-4 control-label" for="usbb">USB</label>
+                        <div class="col-sm-8">
+                            <input class="form-control" name="usbb" id="usbb" type="checkbox" onchange="return DoDevUSB();">
+                        </div>
+                    </div>
+                    <br>
+                    <div style="float: left;">
+                        <button class="btn btn-primary" name="reset" type="submit" style="text-align: center;" onclick="var r=confirm('Do you really want to completely reset the  interface?'); if (r) return DoDevPost('reset'); else return false;">Reset</button>
+                    </div>
+                    <div style="float: left; padding-left: 7px;">
+                        <button class="btn btn-primary" name="sreset" type="submit" style="text-align: center;" onclick="return DoDevPost('sreset');">Soft Reset</button>
+                    </div>
+                    <div style="float: right;">
+                        <button class="btn btn-primary"initialize name="initialize" type="submit" style="text-align: center;" onclick="return DoDevPost('open');">Initialize</button>
+                    </div>
+                    <div style="float: right; padding-right: 7px;">
+                        <button class="btn btn-primary" name="close" type="submit" style="text-align: left;" onclick=" return DoDevPost('close');">Close</button>
+                    </div>
+                </form>
+            </div>
+            
+            
+            <div class="col-xs-6 col-sm-4">
+                <legend>Controller Status</legend>
+                <form class="form-horizontal">
+                    <div class="form-group form-group-sm">
+                        <label class="col-sm-4 control-label" for="homeid">Home Id</label>
+                        <div class="col-sm-8">
+                            <input class="form-control" readonly="true" size="12" name="homeid" id="homeid" value="" type="text">
+                        </div>
+                    </div>
+                    <div class="form-group form-group-sm">
+                        <label class="col-sm-4 control-label" for="cmode">Controller Mode</label>
+                        <div class="col-sm-8">
+                            <input class="form-control" readonly="true" size="12" id="cmode" name="cmode" value="" type="text">
+                        </div>
+                    </div>
+                    <div class="form-group form-group-sm">
+                        <label class="col-sm-4 control-label" for="nodecount">Node Count</label>
+                        <div class="col-sm-8">
+                            <input class="form-control" readonly="true" size="6" name="nodecount" id="nodecount" value="" type="text">
+                        </div>
+                    </div>
+                    <div class="form-group form-group-sm">
+                        <label class="col-sm-4 control-label" for="sucnodeid">SUC Node</label>
+                        <div class="col-sm-8">
+                            <input class="form-control" readonly="true" size="6" name="sucnodeid" id="sucnodeid" value="" type="text">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            
+            
+            <div class="col-xs-6 col-sm-4">
+                <legend>Backup Controller</legend>
+                <form name="BackPost" method="post"> 
+                    <input name="devhidden" class="hide" value="hidden">
+                    <div class="stack" style="position: relative; height: 50px;">
+                        <button class="btn btn-primary" id="save" name="save" onclick="return DoSavePost();" type="submit">Save...</button>
+                    </div>
+                    <div class="stack">
+                        <span id="saveinfo" name="saveinfo" class="legend" style="display: none;">Changes need saving...</span>
+                    </div>
+                </form>
+            </div>
+            <div class="clearfix visible-xs-block"></div>
+            
+            
+</div>
+<form action="NetPost.html" method="get">
+</form>
+ 
+<div class="container">
+<div class="row">
+<div id="network" class="col-xs-6 col-sm-4" style="display:none;">
+            <fieldset> <legend> Network </legend>
+                <form name="NetPost" method="post">
+                    <!--
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li role="presentation" class="active"><a href="#scencntl" aria-controls="scencntl" role="tab" data-toggle="tab">Scenes</a></li>
+                        <li role="presentation"><a href="#topocntl" aria-controls="topocntl" role="tab" data-toggle="tab">Topology</a></li>
+                        <li role="presentation"><a href="#topo" aria-controls="topo" role="tab" data-toggle="tab">Statistics</a></li>
+                        <li role="presentation"><a href="#statcntl" aria-controls="statcntl" role="tab" data-toggle="tab">Test &amp; Heal</a></li>
+                    </ul>
+                    -->
+                    <input name="nethidden" class="hide" value="hidden">
+                    <div class="esb" style="margin-left: 14px; width: 180px;">
+                        <select class="form-control" id="netops" onchange="return DoNetHelp();">
+                            <option value="choice" selected="true">Select an operation:</option>
+                            <option value="scen">Scenes</option>
+                            <option value="topo">Topology</option>
+                            <option value="stat">Statistics</option>
+                            <option value="test">Test &amp; Heal</option>
+                        </select>
+                    </div>
+                    <div class="rsb" style="margin-left: 10px;">
+                        <span id="netinfo" name="netinfo" class="admmsg" style="display: none;"></span>
+                    </div>
+                    <div id="scencntl" name="scencntl" class="rsb" style="display: none;">
+                        <div class="rsb">
+                            <div class="col-md-4 col-xs-4">
+                                <label><span class="legend" style="font-size: 12px;">Scenes</span></label>
+                                <select class="form-control" id="sceneids" size="6" onchange="curscene = this.options[this.selectedIndex].value; return SceneLoad('values');">
+                                </select>
+                                <div class="input-group">
+                                    <input placeholder="label" id="scenelabeltext" type="text" size="8" class="legend form-control" onchange="SceneLoad('label');">
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-success" id="scenecreate" name="scenecreate" onclick="return SceneLoad('create');" type="submit" title="Create">
+                                            <span class="glyphicon glyphicon-plus"></span>
+                                        </button>
+                                        <button class="btn btn-warning" id="sceneexecute" name="sceneexecute" onclick="return SceneLoad('execute');" type="submit" title="Execute">
+                                            <span class="glyphicon glyphicon-flash"></span>
+                                        </button>
+                                        <button class="btn btn-danger" id="scenedelete" name="scenedelete" onclick="var ret = SceneLoad('delete'); curscene = null; return ret;" type="Delete" title="Delete">
+                                            <span class="glyphicon glyphicon-remove"></span>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-md-8 col-xs-8">
+                                <div class="col-md-6 col-xs-6">
+                                    <label><span class="legend" style="font-size: 12px;">Values</span></label>
+                                    <select class="form-control" id="scenevalues" size="6" onchange="return DisplaySceneValue(this.options[this.selectedIndex]);">
+                                    </select>
+
+                                    <div class="input-group">
+                                        <input id="valuetext" type="text" size="8" class="form-control">
+                                        <select class="form-control" id="valueselect" style="display: none;"></select>
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-success" id="savescenevalue" onclick="return SceneLoad('addvalue');" type="submit" title="Add">
+                                                <span class="glyphicon glyphicon-plus"></span>
+                                            </button>
+                                        </span>
+                                    </div>
+                                    <label><span class="legend" style="font-size: 12px;" id="valueunits"></span></label>
+                                </div>
+                                <div class="col-md-6 col-xs-6">
+                                    <label><span class="legend" style="font-size: 12px; vertical-align: top;">Scene Values</span></label>
+                                    <select class="form-control" id="scenescenevalues" size="6" onchange="return DisplaySceneSceneValue(this.options[this.selectedIndex]);">
+                                    </select>
+                                    <div class="input-group">
+                                        <input id="scenevaluetext" type="text" size="8" class="form-control">
+                                        <select class="form-control" id="scenevalueselect" style="display: none;"></select>
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-primary" onclick="return SceneLoad('update');" type="submit" title="Save">
+                                                <span class="glyphicon glyphicon-floppy-disk"></span>
+                                            </button>
+                                            <button class="btn btn-danger" id="removescenevalue" onclick="return SceneLoad('remove');" type="submit" title="Remove">
+                                                <span class="glyphicon glyphicon-remove"></span>
+                                            </button>
+                                        </span>
+                                    </div>
+                                    <label><span class="legend" style="font-size: 12px;" id="scenevalueunits"></span></label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="topocntl" name="topocntl" class="col-md-1" style="display: none;">
+                        <button id="refreshtopo" class="btn btn-primary" name="refreshtopo" onclick="return TopoLoad('load');" type="submit">Refresh</button>
+                    </div>
+                    
+                    <div id="topo" class="col-md-10" style="display: none;">
+                        <table border="0" cellpadding="1" cellspacing="0" class="table table-condensed">
+                            <thead id="topohead">
+                                <tr>
+                                    <th>&nbsp;</th>
+                                    <th>&nbsp;</th>
+                                </tr>
+                            </thead>
+                            <tbody id="topobody">
+                                <tr>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div id="statcntl" name="statcntl" style="display: none;">
+                        <button id="refreshstat" class="btn btn-primary" name="refreshstat" onclick="return StatLoad('load');" type="submit">Refresh</button>
+                    </div>
+                    <div id="statnet" style="display: none;">
+                        <table border="0" cellpadding="1" cellspacing="0" class="table table-condensed">
+                            <thead id="statnethead">
+                                <tr>
+                                    <th style="text-align: right;">Network Errors</th>
+                                    <th style="text-decoration: none;">&nbsp;</th>
+                                    <th style="text-align: right;">Message Counts</th>
+                                    <th style="text-decoration: none;">&nbsp;</th>
+                                    <th style="text-align: right;">Network Info</th>
+                                    <th style="text-decoration: none;">&nbsp;</th>
+                                </tr>
+                            </thead>
+                            <tbody id="statnetbody">
+                                <tr>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div id="allstats" style="margin-left: auto; margin-right: auto; width: 100%;">
+                        <div id="statnode" style="float: left; margin-left: 5px; width: 100%; display: none;">
+                            <table border="0" cellpadding="1" cellspacing="0" style="text-align: center;">
+                                <thead id="statnodehead">
+                                    <tr>
+                                        <th>Node</th>
+                                        <th>Sent</th>
+                                        <th>Failed</th>
+                                        <th>Retries</th>
+                                        <th>Received</th>
+                                        <th>Unsolicited</th>
+                                        <th>Duplicates</th>
+                                        <th>Last Sent</th>
+                                        <th>Last Received</th>
+                                        <th>Last Request RTT</th>
+                                        <th>Average Request RTT</th>
+                                        <th>Last Response RTT</th>
+                                        <th>Average Response RTT</th>
+                                        <th>Quality</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="statnodebody" style="cursor: help;">
+                                    <tr>
+                                        <td>&nbsp;</td>
+                                        <td>&nbsp;</td>
+                                    </tr>
+                                    <tr>
+                                        <td>&nbsp;</td>
+                                        <td>&nbsp;</td>
+                                    </tr>
+                                    <tr>
+                                        <td>&nbsp;</td>
+                                        <td>&nbsp;</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div id="statclass" style="float: left; margin-left: 5px; width: 25%; display: none;">
+                            <table border="0" cellpadding="1" cellspacing="0" style="text-align: center;">
+                                <thead id="statclasshead">
+                                    <tr>
+                                        <th style="text-align: center;">Class</th>
+                                        <th style="text-align: center;">Sent</th>
+                                        <th style="text-align: center;">Received</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="statclassbody">
+                                    <tr>
+                                        <td>&nbsp;</td>
+                                        <td>&nbsp;</td>
+                                        <td>&nbsp;</td>
+                                    </tr>
+                                    <tr>
+                                        <td>&nbsp;</td>
+                                        <td>&nbsp;</td>
+                                        <td>&nbsp;</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <div id="thcntl" name="thcntl" class="rsb" style="display: none; margin-right: 5px;">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="testnode" class="col-sm-2 control-label">Node:</label>
+                                <div class="col-sm-10">
+                                    <input class="form-control" id="testnode" type="text" size="5" class="legend">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="testmcnt" class="col-sm-2 control-label">Message count:</label>
+                                <div class="col-sm-10">
+                                    <input class="form-control" id="testmcnt" type="text" size="5" class="legend">
+                                </div>
+                            </div>
+                            <div class="col-sm-10 col-sm-offset-2">
+                                <button id="testbutton" name="testbutton" onclick="return TestHealLoad('test');" type="submit" class="btn btn-primary">Run</button>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="healnode" class="col-sm-2 control-label">Node:</label>
+                                <div class="col-sm-10">
+                                    <input class="form-control" id="healnode" type="text" size="5">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-10 col-sm-offset-2">
+                                    <label for="healrrs">
+                                        <input id="healrrs" type="checkbox" value="healrr">
+                                        Heal Return Routes
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-10 col-sm-offset-2">
+                                    <button id="healbutton" name="healbutton" onclick="return TestHealLoad('heal');" type="submit" class="btn btn-primary">Run</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="testhealreport" class="log" style="float: left; margin-left: 5px; width: 98%; text-align: left; display: none;">
+                    </div>
+                </form>
+            </fieldset>
+  </div>
+        
+<p></p>
+<div id="admin" class="col-md-12">
+                <form name="AdmPost" method="post">
+                    <input name="admhidden" class="hide" value="hidden">
+                    <div class="esb" style="">
+                    <button class="btn btn-lg btn-primary btn-circle btn-new btn-add pull-left" style="margin-left: 0px! important;" onclick="return call_add_device('addds');"><i class="fa fa-plus fa-lg"></i></button>
+                    &nbsp;&nbsp;&nbsp;
+                    <button class="btn btn-lg btn-danger btn-circle btn-new btn-add" style="margin-left: 0px! important;" onclick="return call_add_device('remd');"><i class="fa fa-times fa-lg"></i></button>
+                    <span id="timer_msg" style="display:none;margin-left:22%;">You have <kbd id="timer_duration" style="font-size:26px;">00:00</kbd> seconds remaining to <i>add</i> the device</span>
+                    <button class="btn btn-lg btn-success btn-circle btn-new btn-add pull-right" name="reset" type="submit" style="text-align: center;" onclick="var r=confirm('Do you really want to completely reset the  interface?'); if (r) return DoDevPost('reset'); else return false;">Reset</button>
+                   &nbsp;&nbsp;&nbsp;
+                    <button class="btn btn-lg btn-info btn-circle btn-new btn-add pull-right" id="save"  style="margin-right: 12px !important;" name="save" onclick="return DoSavePost();" type="submit"><i class="fa fa-floppy-o fa-lg"></i></button>
+                    <!-- <button class="btn btn-lg btn-default btn-circle btn-new btn-add pull-right" id="upload_obox"  style="margin-right: 12px !important;background-color:#808080 !important;" name="upload_obox" onclick="return DoUpgrade();" type="submit"><i class="fa fa-download fa-lg"></i></button>
+                     
+                     <button class="btn btn-lg btn-circle btn-new btn-add" style="margin-left: 5px !important;" onclick="return call_add_device('refreshnode');"	><i class="fa fa-refresh"></i></button> -->
+                      <select class="form-control" id="adminops" onchange="return DoAdmHelp();" style="display:none;">
+                            <option value="choice" selected="true">Select an operation:</option>
+                            <option value="addds">Add Device (Secure)</option>
+                            <option value="remd">Remove Device</option>
+                            <option value="remfn">Remove Failed Node</option>
+                            <option value="repfn">Replace Failed Node</option>
+                            <option value="refreshnode">Refresh Node Info</option>
+                       </select> 
+                    </div>
+                    <div id="admcntl" name="admcntl" class="rsb" style="display: none;"></div>
+                    <button id="admgo" name="go" class="btn btn-success" style="display: none;"
+                        onclick="return DoAdmPost(0);" type="submit">Go</button> 
+                    <button id="admcan" name="cancel" class="btn btn-warning" style="display: none;"
+                        onclick="return DoAdmPost(1);" type="submit">Cancel</button>
+                    <br>
+                    <div class="rsb alert alert-info alert-box" style="margin-left:22%;width:50%;display:none;">
+                        <a class="close" aria-label="close" onclick="DoAlertClose();">&times;</a>  
+                        <span id="adminfo" name="adminfo" class="admmsg"></span>
+                    </div>
+                </form>
+</div>
+<div id="funcs" class="col-xs-6 col-sm-4" style="display:none;">
+            <fieldset><legend> Functions </legend>
+                <form name="NodePost" method="post">
+                    <input name="nodehidden" class="hide" value="hidden">
+                    <div class="esb" style="margin-left: 14px; width: 180px;">
+                        <!--
+                        <div class="btn-group-vertical" data-toggle="buttons">
+                            <label class="btn btn-primary">
+                                <input type="radio" value="nam" autocomplete="off"> Name
+                            </label>
+                            <label class="btn btn-primary">
+                                <input type="radio" value="loc" autocomplete="off"> Location
+                            </label>
+                            <label class="btn btn-primary">
+                                <input type="radio" value="grp" autocomplete="off"> Group
+                            </label>
+                            <label class="btn btn-primary">
+                                <input type="radio" value="pol" autocomplete="off"> Polling
+                            </label>
+                        </div>
+                        <script type="text/javascript">
+                            $('.btn-group-vertical input').on('change', DoNodeHelp);
+                        </script>
+                        <br>
+                        -->
+                        <select class="form-control" id="nodeops" onchange="return DoNodeHelp();">
+                            <option value="choice" selected="true">Select an operation:</option>
+                            <option value="nam">Name</option>
+                            <option value="loc">Location</option>
+                            <option value="grp">Group</option>
+                            <option value="pol">Polling</option>
+                        </select>
+                    </div>
+                    <div id="nodecntl" name="nodecntl" class="rsb" style="display: none; margin-right: 10px;"></div>
+                    <div class="rsb">
+                        <span id="nodeinfo" name="nodeinfo"class="admmsg"></span>
+                    </div>
+                </form>
+            </fieldset>
+</div>
+</div>
+<p></p>
+<br>
+<div class="row">
+<div id="devices" class="col-md-12 table-responsive">
+<form>
+<table class="table table-striped">
+    <thead>
+      <tr>
+      <th colspan="9" style="text-align:center;">Devices</th>
+      </tr>
+	  <tr>
+	  <th style="text-align:center;">S.No</th>
+          <th style="text-align:center;">Product Name</th>
+          <th style="text-align:center;">Nick Name</th> 
+          <th style="text-align:center;">Value</th>
+          <th style="text-align:center;">Last Heard</th>
+          <th style="text-align:center;">Status</th>
+          <th style="text-align:center;">Remove</th>
+          <th style="text-align:center;">Refresh</th>
+	  </tr>
+    </thead>
+    <tbody id="tbody">
+    </tbody>
+  </table>
+  </form>
+</div>
+</div>
+<div id="controls" style="display:none;">
+            <div class="col-xs-4 col-sm-3">
+                <ul class="nav nav-pills nav-stacked">
+                    <li role="presentation" class="active" id="configcur"><a href="#divconfigcur" aria-controls="divconfigcur" role="tab" data-toggle="tab">Current Values</a></li>
+                    <li role="presentation" id="configcon"><a href="#divconfigcon" aria-controls="divconfigcon" role="tab" data-toggle="tab">Configuration</a></li>
+                    <li role="presentation" id="configinfo"><a href="#divconfiginfo" aria-controls="divconfiginfo" role="tab" data-toggle="tab">Information</a></li>
+                </ul>
+            </div>
+            <div class="col-xs-8 col-sm-9">
+                <form name="ValuePost" method="post">
+                    <div class="tab-content">
+                        <div id="divconfigcur" class="tab-pane active">
+                        </div>
+                        <div id="divconfigcon" class="tab-pane">
+                        </div>
+                        <div id="divconfiginfo" class="tab-pane">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div style="float: left; position: relative; width: 340px; margin-right: -340px;">&nbsp;
+            </div>
+</div>
+<div id="log" style="display:none;float: left; width: 100%; text-align: left;">
+            <br>
+            <br>
+            <fieldset> <legend> Log output </legend>
+                <form>
+                    <pre id="logdata" class="log">
+                    </pre>
+                </form>
+            </fieldset>
+        </div>
+</div>
+<div class="col-md-12">
+  <div class="modal fade" id="modal-container-154656" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+   <div class="modal-dialog">
+    <div class="modal-content">
+     <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times</button>
+        <h4 class="modal-title" id="myModalLabel">Nick Name</h4>
+     </div>
+     <div class="modal-body" id="nick_name_input">
+	<input type="text" size="11" value="" class="legend form-control" id="nick_name">
+     </div>
+     <div class="modal-footer">
+	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button> 
+	<button type="button" class="btn btn-primary" onclick="return savenickname();">Submit</button>
+     </div>
+     </div>
+     </div>		
+     </div>
+</div>
+<div class="col-md-12">
+<div id="DeviceValueListDialog" class="modal fade" aria-labelledby="myModalLabel" aria-hidden="true" role="dialog">
+    <div class="modal-dialog">
+     <div class="modal-content">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times</button>
+        <h3>Device Values</h3>
+    </div>
+    <div class="modal-body">
+       <div class="tabbable"> <!-- Only required for left/right tabs -->
+        <div class="tab-content" style="padding:10px;">
+        <div class="tab-pane active" id="tab1">
+        <p></p>
+        <br>
+        <br>
+        </div>
+        </div>
+        </div>
+   </div>
+   <div class="modal-footer">
+         <a class="btn btn-primary" onclick="$('#DeviceValueListDialog').modal('hide')">Close</a>
+   </div>
+   </div>
+  </div>
+  </div>
+</div>
+<div class="col-md-12">
+<div id="modal-container-connect-obox" class="modal fade" aria-labelledby="myModalLabel" aria-hidden="true" role="dialog">
+    <div class="modal-dialog">
+     <div class="modal-content">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" onclick="DoModalCreateClose();">&times</button>
+        <h4 class="modal-title" id="myModalLabel">Connect O Box</h4>
+    </div>
+    <div class="modal-body">
+       <div style="margin-left: 10%;width:80%;" class="alert alert-danger connect-alert-box">
+          <a class="close alert-box-close" aria-label="close" onclick="DoAlertCreateClose();">&times;</a>
+          <span>&nbsp;</span>
+       </div>
+     <form role="form" name="connect_obox_form" class="connect_obox_form" method="post">
+    <div class="form-group">
+      <label for="sel1" style="">Select O Box to connect</label>
+      <p></p>
+      <select class="form-control" style="box-shadow: 3px 5px 8px grey !important;" id="oboxId" name="oboxId" data-validation="required" data-validation-error-msg="Please select the O Box to connect">
+        <option selected="true" value="">-----------</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <input type="submit" style="box-shadow: 1px 5px 8px grey !important;"  class="btn btn-primary obox_connect" id="obox_connect_btn" value="connect">
+     </div>
+  </form>
+   </div>
+   </div>
+  </div>
+  </div>
+</div>
+<div class="col-md-12">
+<div id="modal-container-add-obox" class="modal fade" aria-labelledby="myModalLabel" aria-hidden="true" role="dialog">
+    <div class="modal-dialog">
+    <div class="modal-content">
+     <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" onclick="DoModalAddClose();">&times</button>
+        <h4 class="modal-title" id="myModalLabel">Add O Box</h4>
+     </div>
+     <div class="modal-body">
+     <div style="margin-left: 10%;width:80%;display:none;" class="alert alert-danger add-alert-box">
+      <a class="close alert-box-close" aria-label="close" onclick="DoAlertAddClose();">&times;</a>
+     <span>&nbsp;</span>
+     </div>
+     <form role="form" name="add_obox_form" class="add_obox_form" action="" method="post">
+	          <div class="form-group">
+	            <label for="username">O Box Id</label>
+	            <input type="text" size="11" value="" class="legend form-control" name="new_oboxId" id="new_oboxId" data-validation="required" data-validation-error-msg="Please provide the O Box ID to add">
+	          </div>
+	          <div class="form-group">
+      			<input type="submit" class="btn btn-primary obox_create" id="add_obox_btn" value="Add">
+     			</div>
+	   </form>
+     </div>
+     </div>
+     </div>
+</div>
+<div class="modal-bg" style="display:none;background:black;opacity:0.6;">
+<div class="progress">
+   <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:100%;"></div>
+</div>
+</div>
+</body>
+<script type="text/javascript">
+$.validate();
+$(document).ready(function()
+{
+ $.ajaxSetup({
+  xhrFields: {
+    withCredentials: true
+  }
+ });
+ $.ajax({
+    url:window.location.href+"getdeviceID.json",
+    cache:false,
+    dataType:"json",
+    complete:function(data){
+       $('.navbar-brand').html(data.responseJSON.DeviceID + ' ' + 'Dashboard');
+       $.ajax({
+         url:"https://obox-1271.appspot.com/rest/obox/test?oboxId=" + data.responseJSON.DeviceID,
+         cache:false,
+         dataType:"json",
+         complete:function(data){
+              if (data.status == 200)
+              {
+              $('.caret').css('display','');
+              $('.user_name').html(data.responseJSON.userName);
+              $('.user_email').html(data.responseJSON.email);
+              $('.user_phone').html(data.responseJSON.phone);
+              }
+    }
+ });
+    }
+ });
+});
+function DoAlertClose(){
+$('.alert-box').css("display",'none');
+}
+function DoModalCreateClose()
+{
+$('#modal-container-connect-obox').modal('hide');
+}
+function open_connect_modal() {
+	$('#modal-container-connect-obox').modal('show');
+	$('form[name="connect_obox_form"]')[0].reset();
+	$('.connect-alert-box').css('display','none');
+}
+function DoAlertCreateClose(){
+  $('.connect-alert-box').css('display','none');
+}
+$(".connect_obox_form").submit(function(e) {
+	$(".modal-bg").css("display", "block");
+	var complete = true;
+	if ($('#oboxId').val() == '')
+    {
+          complete = false;
+     }
+	 if (complete == true)
+     {
+      console.log($(".connect_obox_form").serialize());
+  	 	var url = "https://obox-1271.appspot.com/rest/obox/dashboard"; // the script where you handle the form input.
+	 	$.ajax({
+	          type: "POST",
+	          url: url,
+	          data: $(".connect_obox_form").serialize(), // serializes the form's elements.
+	          success: function(data)
+	          {
+	   
+	        	  if(data.status=="200"){
+	        		  $(".modal-bg").css("display", "none");
+	        		  window.location.href=data.message;
+	        		  //localStorage.setItem('devices','test')
+	        	  }
+	          },
+	          error: function(data){
+	        	  $(".modal-bg").css("display", "none");
+	     	  	  $('.alert-box').css('display','');
+	     	  	 if ($('.alert-box').hasClass('alert-success'))
+	     	  	 {
+	     	  	 $('.alert-box').removeClass('alert-success')
+	     	  	 }
+	     	  	 $('.alert-box').addClass('alert-danger');
+                $('.alert-box span').html(data.responseJSON.message);
+                $('.alert-box').focus();
+	          }
+	        });
+	   	e.preventDefault(); // avoid to execute the actual submit of the form
+     }
+	 if (complete == false){
+	    $(".modal-bg").css("display", "none");
+     }
+});
+function DoAlertAddClose(){
+  $('.add-alert-box').css('display','none');
+}
+function open_add_modal() {
+    $('#modal-container-add-obox').modal('show');
+    $('form[name="add_obox_form"]')[0].reset();
+    $('.add-alert-box').css('display','none');
+}
+function DoModalAddClose()
+{
+    $('#DoModalAddClose').modal('hide');
+}
+$(".add_obox_form").submit(function(e) {
+ $(".modal-bg").css("display", "block");
+    var complete = true;
+    if ($('#new_oboxId').val() == '')
+    {
+          complete = false;
+     }
+     if (complete == true)
+     {
+      console.log($(".add_obox_form").serialize());
+        var url = "https://obox-1271.appspot.com/rest/obox/add_gateway"; // the script where you handle the form input.
+        $.ajax({
+              type: "POST",
+              url: url,
+              data: $(".add_obox_form").serialize(), // serializes the form's elements.
+              success: function(data)
+              {
+       
+                  if(data.status=="200"){
+                      $(".modal-bg").css("display", "none");
+                      $('#oboxId').empty();
+                      var opts = '<option value="' + " " + '" selected=true>-------</option>';
+                      $('#oboxId').append(opts);
+                      $( data.devices ).each(function( i ) 
+                      {    
+                       $('#oboxId').append($("<option></option>")
+                       .attr("value", this.devicename)
+                       .text(this.devicename)
+                       );
+                      //window.location.href=data.message;
+                 })
+                 if ($('.alert-box').hasClass('alert-danger'))
+                      {
+                      $('.alert-box').removeClass('alert-danger')
+                      }
+                      $('.alert-box').addClass('alert-success');
+                   $('#modal-container-add-obox').modal('hide');
+                   $('.alert-box span').html(data.serialNumber + ' was ' + data.message);
+                      localStorage.setItem('devices',JSON.stringify(data.devices));
+                   $('.alert-box').focus();                    
+                  }
+              },
+              error: function(data){
+                  $(".modal-bg").css("display", "none");
+                  $('.add-alert-box').css('display','');
+                 if ($('.add-alert-box').hasClass('alert-success'))
+                 {
+                 $('.add-alert-box').removeClass('alert-success')
+                 }
+                 $('.add-alert-box').addClass('alert-danger');
+                $('.add-alert-box span').html(data.responseJSON.message);
+                $('.add-alert-box').focus();
+              }
+            });
+        e.preventDefault(); // avoid to execute the actual submit of the form
+     }
+     if (complete == false){
+        $(".modal-bg").css("display", "none");
+     }
+    return false;
+});
+</script>
+</html> 

@@ -1,0 +1,621 @@
+/*Device initialize action by ArulSankar*/
+int Webserver::SendDeviceInitialize(struct MHD_Connection *conn)
+{
+	 //char OBox[32];
+	 const char* Device_Initialize = NULL;
+	 //const char* Action;
+     char *fn = NULL;
+     //char *ptr = NULL;
+     int32 ret;
+     char fntemp[32];
+     //void *_context1;
+     std::ofstream file_id;
+     Json::Value event_initialize;
+     Json::Value Device_initialize;
+     Json::StyledWriter styledWriter;
+     //void* ZWave;
+     Device_Initialize = MHD_lookup_connection_value(conn, MHD_GET_ARGUMENT_KIND, "initialize");
+     //Action = MHD_lookup_connection_value(conn, MHD_GET_ARGUMENT_KIND, "action");
+     if(Device_Initialize != NULL){
+    	 	 	 	Device_initialize.clear();
+    	 	 	 	/*if (strcmp(Device_Initialize, "open") == 0) {
+					devname = (char *)malloc(strlen("/dev/ttyACM0") + 1);
+					if (devname == NULL) {
+						fprintf(stderr, "Out of memory open devname\n");
+						exit(1);
+					}
+					usb = false;
+					strcpy(devname, "/dev/ttyACM0");
+					Manager::Get()->AddDriver(devname);
+					sleep(1);
+					if (serial_port != 1)
+					{
+						Manager::Get()->AddDriver(devname);
+						if (serial_port == 1)
+						{
+							Device_initialize["status"] = "opened";
+							Device_initialize["status_code"] = MHD_HTTP_OK;
+						}
+					} else{
+						MyNode::setAllChanged(true);
+						Device_initialize["status"] = "Already opened";
+						Device_initialize["status_code"] = MHD_HTTP_BAD_REQUEST;
+						}
+    	 	 	 	} */
+    	 	 	    if (strcmp(Device_Initialize, "reset") == 0) { /* reset */
+    					char str_reset[32];
+    					snprintf(str_reset,sizeof(str_reset),"zwcfg_0x%08x.xml",homeId);
+    					//remove( str_reset );
+    					fprintf(stderr,"str is %s",str_reset);
+    					Manager::Get()->ResetController(homeId);
+    					remove( str_reset );
+    					Device_initialize["status"] = "Your gateway was reset.";
+    					Device_initialize["status_code"] = MHD_HTTP_OK;
+    				}else{
+    	 	 	 		Device_initialize["status"] = "Please check initialize option.";
+    	 	 	 		Device_initialize["status_code"] = MHD_HTTP_BAD_REQUEST;
+    	 	 	 	}
+     	 }else{
+    	 Device_initialize["status"] = "Please Check your API Request!!!!!";
+     }
+	 event_initialize["Device_Initialize_Status"] = Device_initialize;
+	 Device_initialize.clear();
+		//pthread_mutex_unlock(&nlock);
+     strncpy(fntemp, "/tmp/ozwcp.deviceinitialize.XXXXXX", sizeof(fntemp));
+     fn = mktemp(fntemp);
+     if (fn == NULL)
+             return MHD_YES;
+	 strncat(fntemp, ".json", sizeof(fntemp));
+     file_id.open(fn);
+     file_id << styledWriter.write(event_initialize);
+     file_id.close();
+
+     ret = web_send_file(conn, fn, MHD_HTTP_OK, true);
+     return ret;
+}
+
+/*Device Rename action by ArulSankar*/
+int Webserver::SendDeviceRename(struct MHD_Connection *conn)
+{
+	 //char OBox[32];
+	 const char* Device_Rename = NULL;
+	 const char* DeviceID = NULL;
+	 //const char* Action;
+     char *fn = NULL;
+     //char *ptr = NULL;
+     int32 ret;
+     char fntemp[32];
+     //void *_context1;
+     std::ofstream file_id;
+     Json::Value event_rename;
+     Json::Value Device_rename;
+     Json::StyledWriter styledWriter;
+     //void* ZWave;
+     DeviceID = MHD_lookup_connection_value(conn, MHD_GET_ARGUMENT_KIND, "deviceid");
+     Device_Rename = MHD_lookup_connection_value(conn, MHD_GET_ARGUMENT_KIND, "name");
+     //Action = MHD_lookup_connection_value(conn, MHD_GET_ARGUMENT_KIND, "action");
+     if( DeviceID != NULL){
+    	 Device_rename.clear();
+    	 int32 nodeID = atoi(DeviceID);
+    	 if (nodeID < MAX_NODES && nodes[nodeID] != NULL){
+    	 	 	 	//Device_rename.clear();
+    	 	 	    if (Device_Rename != NULL) {
+    	 	 	    	Manager::Get()->SetNodeName(homeId, nodeID, Device_Rename);
+    	 	 	    	Manager::Get()->WriteConfig(homeId);
+    	 	 	    	pthread_mutex_lock(&glock);
+    	 	 	    	needsave = false;
+    	 	 	    	pthread_mutex_unlock(&glock);
+    					Device_rename["status"] = "Your device name was renamed.";
+    					Device_rename["status_code"] = MHD_HTTP_OK;
+    				}else{
+    	 	 	 		Device_rename["status"] = "Please check rename option.";
+    	 	 	 		Device_rename["status_code"] = MHD_HTTP_BAD_REQUEST;
+    	 	 	 	}
+     	 }else{
+    		 Device_rename["status_code"] = MHD_HTTP_BAD_REQUEST;
+    		 Device_rename["help"] = "Please check your DeviceID!!!!!";
+    	 }
+    	 }else{
+    	 Device_rename["status"] = "Please Check your API Request!!!!!";
+    	 }
+	 event_rename["Device_Rename_Status"] = Device_rename;
+	 Device_rename.clear();
+		//pthread_mutex_unlock(&nlock);
+     strncpy(fntemp, "/tmp/ozwcp.devicerename.XXXXXX", sizeof(fntemp));
+     fn = mktemp(fntemp);
+     if (fn == NULL)
+             return MHD_YES;
+	 strncat(fntemp, ".json", sizeof(fntemp));
+     file_id.open(fn);
+     file_id << styledWriter.write(event_rename);
+     file_id.close();
+
+     ret = web_send_file(conn, fn, MHD_HTTP_OK, true);
+     return ret;
+}
+/*Switch_binary action by ArulSankar*/
+int Webserver::SendDeviceID_useraction(struct MHD_Connection *conn)
+{
+	 //char OBox[32];
+	 const char* Device_ID = NULL;
+	 const char* Action = NULL;
+     char *fn = NULL;
+     //char *ptr = NULL;
+     int32 ret;
+     char fntemp[32];
+     //void *_context1;
+     std::ofstream file_id;
+     Json::Value event_status;
+     Json::Value Devices_status;
+     Json::StyledWriter styledWriter;
+     string device_command;
+     string CClass;
+     string CDevice_ID;
+     //void* ZWave;
+     Device_ID = MHD_lookup_connection_value(conn, MHD_GET_ARGUMENT_KIND, "deviceid");
+     Action = MHD_lookup_connection_value(conn, MHD_GET_ARGUMENT_KIND, "action");
+     if ( Device_ID != NULL && Action != NULL){
+    	 /*if (logread != 0){
+    		 Devices_status["help"] = "Sorry your OBox is busy mode, please come back after sometimes !!!!!";
+    		 Devices_status["status_code"] = MHD_HTTP_BAD_REQUEST;
+    		 goto event;
+    	 }*/
+    	 int32 nodeID = atoi(Device_ID);
+    	 if (nodeID < MAX_NODES){
+    	 if (nodes[nodeID] != NULL) {
+		 MyValue *vals = nodes[nodeID]->getValue(0);
+		 string Action_str;
+		 ValueID id = vals->getId();
+			if (Manager::Get()->GetValueAsString(id, &Action_str))
+			{
+			Action_str = Action_str.c_str();
+			}
+			if (strcmp(Action, Action_str.c_str()) == 0){
+				Devices_status["help"] = "Sorry your device already in following state";
+				if (strcmp(Action, "True") == 0)
+				Devices_status["state"] = "On";
+				else
+				Devices_status["state"] = "Off";
+				Devices_status["status_code"] = MHD_HTTP_BAD_REQUEST;
+				goto event;
+			}
+    	 if (strcmp(cclassStr(id.GetCommandClassId()), "SWITCH BINARY") == 0){
+    		 CClass = cclassStr(id.GetCommandClassId());
+    		 CDevice_ID = Device_ID;
+    		 //string CAction = Action;
+    		 device_command = CDevice_ID + "-" + CClass + "-user-bool-1-0";
+    	 }
+    	 if (strcmp(Action, "True") == 0){
+				MyValue *device_action = MyNode::lookup(string(device_command));
+				//fprintf(stderr, "Set Val is=%s\n", Action_str.c_str());
+				if (device_action != NULL) {
+					string arg = Action;
+					//fprintf(stderr, "Set Arg is=%s\n", arg.c_str());
+					if (!Manager::Get()->SetValue(device_action->getId(), arg))
+						fprintf(stderr, "SetValue string failed type=%s\n", valueTypeStr(device_action->getId().GetType()));
+						//Manager::Get()->RequestNodeDynamic(homeId, nodeID);
+				} else {
+					fprintf(stderr, "Can't find ValueID for %s\n", device_action);
+				}
+			 Devices_status["status_code"] = MHD_HTTP_OK;
+    		 Devices_status["On/Off"] = Action;
+    		 sleep(1);
+				if (Manager::Get()->GetValueAsString(id, &Action_str))
+				{
+				Devices_status["value"] = Action_str.c_str();
+				}
+				Manager::Get()->RequestNodeDynamic(homeId, nodeID);
+    	 }
+    	 else if(strcmp(Action, "False") == 0){
+				MyValue *device_action = MyNode::lookup(string(device_command));
+				//fprintf(stderr, "Set Val is=%s\n", Action_str.c_str());
+				if (device_action != NULL) {
+					string arg = Action;
+					//fprintf(stderr, "Set Arg is=%s\n", arg.c_str());
+					if (!Manager::Get()->SetValue(device_action->getId(), arg))
+						fprintf(stderr, "SetValue string failed type=%s\n", valueTypeStr(device_action->getId().GetType()));
+						//Manager::Get()->RequestNodeDynamic(homeId, nodeID);
+				} else {
+					fprintf(stderr, "Can't find ValueID for %s\n", device_action);
+				}
+			 Devices_status["status_code"] = MHD_HTTP_OK;
+    		 Devices_status["On/Off"] = Action;
+    		 sleep(1);
+    		 	if (Manager::Get()->GetValueAsString(id, &Action_str))
+				{
+				Devices_status["value"] = Action_str.c_str();
+				}
+    		 	Manager::Get()->RequestNodeDynamic(homeId, nodeID);
+    	 }
+    	 else{
+    		    Devices_status["status_code"] = MHD_HTTP_BAD_REQUEST;
+    	     	Devices_status["help"] = "Please check your DeviceAction!!!!!";
+    	     }
+    	 }
+    	 else{
+    		 Devices_status["status_code"] = MHD_HTTP_BAD_REQUEST;
+    		 Devices_status["help"] = "This Device not support on this action!!!!!";
+    	 }
+    	 }else{
+    		 Devices_status["status_code"] = MHD_HTTP_BAD_REQUEST;
+    		 Devices_status["help"] = "Please check your DeviceID!!!!!";
+    	 }
+	 }
+     else{
+    	     Devices_status["status_code"] = MHD_HTTP_BAD_REQUEST;
+         	 Devices_status["help"] = "Please check your API Request!!!!!";
+         }
+     event:
+	 event_status["Device_Action_Status"] = Devices_status;
+	 Devices_status.clear();
+		//pthread_mutex_unlock(&nlock);
+     strncpy(fntemp, "/tmp/ozwcp.user_action.XXXXXX", sizeof(fntemp));
+     fn = mktemp(fntemp);
+     if (fn == NULL)
+             return MHD_YES;
+	 strncat(fntemp, ".json", sizeof(fntemp));
+     file_id.open(fn);
+     file_id << styledWriter.write(event_status);
+     file_id.close();
+
+     ret = web_send_file(conn, fn, MHD_HTTP_OK, true);
+     return ret;
+}
+/*ArulSankar Json*/
+int Webserver::SendPollJsonResponse (struct MHD_Connection *conn)
+{
+	char str_nodes[16];
+	const char* Get_Device_ID_Details;
+	int32 i, j;
+	int32 z = 1;
+	int32 nodeID = 0, nodeID_new = 0;
+	char fntemp[32];
+	char *fn;
+	//FILE *fp;
+	int32 ret;
+	std::ofstream file_id;
+	//file_id.open("devices.json");
+
+	//Json::Value event;
+	Json::Value event;
+	Json::Value Devices;
+	Json::Value properties;
+	Get_Device_ID_Details = MHD_lookup_connection_value(conn, MHD_GET_ARGUMENT_KIND, "deviceid");
+    if ( Get_Device_ID_Details != NULL){
+    	if (strcmp(Get_Device_ID_Details, "all") == 0){
+    		goto GetDetailsAll;
+    	}
+    	nodeID = atoi(Get_Device_ID_Details);
+    	i = nodeID;
+    	nodeID_new = nodeID;
+    	if (nodeID < MAX_NODES){
+    	if (nodes[i] != NULL ){
+    	goto GetDetails;
+    	}else{
+   		 string str_error = "This Device ID not available, Please check your Device ID!";
+   		 event["status_code"] = MHD_HTTP_BAD_REQUEST;
+   		 event["help"] = str_error.c_str();
+   		 goto device_details_event;
+    	}
+    	}else{
+    	   		 string str_error = "Please check your Device ID!";
+    	   		 event["status_code"] = MHD_HTTP_BAD_REQUEST;
+    	   		 event["help"] = str_error.c_str();
+    	   		 goto device_details_event;
+    	      }
+        }else{
+		 string str_error = "Oh Something went Wrong please check your API!!!!!";
+		 event["status_code"] = MHD_HTTP_BAD_REQUEST;
+		 event["help"] = str_error.c_str();
+		 goto device_details_event;
+    	}
+
+	pthread_mutex_lock(&nlock);
+	GetDetailsAll:
+	while(z)
+	{
+		i = 0;
+		j = 1;
+		while (j <= MyNode::getNodeCount() && i < MAX_NODES)
+		{
+			if (nodes[i] != NULL )
+			{
+				GetDetails:
+				snprintf(str_nodes, sizeof(str_nodes), "%d", i);
+				bool listening;
+				bool flirs;
+				bool zwaveplus;
+				Devices["Information"]["nodeid"] = i;
+				zwaveplus = Manager::Get()->IsNodeZWavePlus(homeId, i);
+				if (zwaveplus)
+				{
+					string value = Manager::Get()->GetNodePlusTypeString(homeId, i);
+					value += " " + Manager::Get()->GetNodeRoleString(homeId, i);
+					Devices["Information"]["basictype"] = value.c_str();
+					Devices["Information"]["generictype"] = Manager::Get()->GetNodeDeviceTypeString(homeId, i).c_str();
+				}
+				else
+				{
+					Devices["Information"]["basictype"] = nodeBasicStr(Manager::Get()->GetNodeBasic(homeId, i));
+					Devices["Information"]["generictype"] = Manager::Get()->GetNodeType(homeId, i).c_str();
+				}
+				Devices["Information"]["manufacturer"] = Manager::Get()->GetNodeManufacturerName(homeId, i).c_str();
+				Devices["Information"]["name"] = Manager::Get()->GetNodeName(homeId, i).c_str();
+				Devices["Information"]["location"] = Manager::Get()->GetNodeLocation(homeId, i).c_str();
+				Devices["Information"]["product"] = Manager::Get()->GetNodeProductName(homeId, i).c_str();
+				Devices["Information"]["listening"] = Manager::Get()->IsNodeListeningDevice(homeId, i) ? "true" : "false";
+				Devices["Information"]["frequent"] = Manager::Get()->IsNodeFrequentListeningDevice(homeId, i) ? "true" : "false";
+				Devices["Information"]["beam"] = Manager::Get()->IsNodeBeamingDevice(homeId, i) ? "true" : "false";
+				Devices["Information"]["routing"] = Manager::Get()->IsNodeRoutingDevice(homeId, i) ? "true" : "false";
+				Devices["Information"]["security"] = Manager::Get()->IsNodeSecurityDevice(homeId, i) ? "true" : "false";
+				Devices["Information"]["time"] = nodes[i]->getTime();
+				Devices["Information"]["node_count"] = MyNode::getNodeCount();
+				listening = Manager::Get()->IsNodeListeningDevice(homeId, i);
+				flirs = Manager::Get()->IsNodeFrequentListeningDevice(homeId, i);
+#if 0
+				fprintf(stderr, "i=%d failed=%d\n", i, Manager::Get()->IsNodeFailed(homeId, i));
+				fprintf(stderr, "i=%d awake=%d\n", i, Manager::Get()->IsNodeAwake(homeId, i));
+				fprintf(stderr, "i=%d state=%s\n", i, Manager::Get()->GetNodeQueryStage(homeId, i).c_str());
+				fprintf(stderr, "i=%d listening=%d flirs=%d\n", i, listening, flirs);
+#endif
+				if (Manager::Get()->IsNodeFailed(homeId, i))
+				{
+					Devices["Information"]["status"] = "Dead";
+				}
+				else
+				{
+					string s = Manager::Get()->GetNodeQueryStage(homeId, i);
+					if (s == "Complete")
+					{
+						if (i != nodeId && !listening && !flirs)
+						{
+							Devices["Information"]["status"] = Manager::Get()->IsNodeAwake(homeId, i) ? "Awake" : "Sleeping";
+						}
+						    else
+						Devices["Information"]["status"] = "Ready";
+					}
+					else
+					{
+						if (i != nodeId && !listening && !flirs)
+						{
+							Devices["Information"]["status"] = Manager::Get()->IsNodeAwake(homeId, i) ? "Awake" : "Sleeping";
+						}
+							else
+						Devices["Information"]["status"] = "Ready";
+					}
+				}
+				int32 idcnt = nodes[i]->getValueCount();
+				//Json::Value properties;
+				for (int k = 0; k < idcnt; k++)
+				{
+				MyValue *vals = nodes[i]->getValue(k);
+				ValueID id = vals->getId();
+				string str;
+				if ( strcmp(Manager::Get()->GetNodeType(homeId, i).c_str(), "Routing Alarm Sensor") == 0 )
+				{
+					//for (int w = 0; w < 10; w++)
+					//{
+					//string str_change;
+					//MyValue *vals = nodes[i]->getValue(6);
+					//ValueID id = vals->getId();
+					if ( strcmp(cclassStr(id.GetCommandClassId()), "SENSOR ALARM") == 0 )
+					{
+					Devices["Information"]["zWaveproperties"]["A-GenericValues"]["CommandClass"] = cclassStr(id.GetCommandClassId());
+					if (Manager::Get()->GetValueAsString(id, &str))
+					{
+					Devices["Information"]["zWaveproperties"]["A-GenericValues"]["value"] = str.c_str();
+					}
+					Devices["Information"]["zWaveproperties"]["A-GenericValues"]["label"] = Manager::Get()->GetValueLabel(id).c_str();
+					Devices["Information"]["zWaveproperties"]["A-GenericValues"]["type"] = valueTypeStr(id.GetType());
+					}
+					//continue;
+					//}
+				}
+				if ( strcmp(Manager::Get()->GetNodeType(homeId, i).c_str(), "Home Security Sensor") == 0 )
+				{
+					//for (int w = 0; w < 10; w++)
+					//{
+					//string str_change;
+					//MyValue *vals = nodes[i]->getValue(6);
+					//ValueID id = vals->getId();
+					if ( (strcmp(cclassStr(id.GetCommandClassId()), "ALARM") == 0) && (strcmp(Manager::Get()->GetValueLabel(id).c_str(), "Burglar") == 0))
+					{
+					Devices["Information"]["zWaveproperties"]["A-GenericValues"]["CommandClass"] = cclassStr(id.GetCommandClassId());
+					if (Manager::Get()->GetValueAsString(id, &str))
+					{
+					Devices["Information"]["zWaveproperties"]["A-GenericValues"]["value"] = str.c_str();
+					}
+					Devices["Information"]["zWaveproperties"]["A-GenericValues"]["label"] = Manager::Get()->GetValueLabel(id).c_str();
+					Devices["Information"]["zWaveproperties"]["A-GenericValues"]["type"] = valueTypeStr(id.GetType());
+					}
+					//continue;
+					//}
+				}
+				if ( strcmp(cclassStr(id.GetCommandClassId()), "SWITCH BINARY") == 0 || strcmp(cclassStr(id.GetCommandClassId()), "SENSOR BINARY") == 0 )
+				{
+					Devices["Information"]["zWaveproperties"]["A-GenericValues"]["CommandClass"] = cclassStr(id.GetCommandClassId());
+					//TiXmlText *textElement;
+					if (Manager::Get()->GetValueAsString(id, &str))
+						Devices["Information"]["zWaveproperties"]["A-GenericValues"]["value"] = str.c_str();
+						//textElement = new TiXmlText(str.c_str());
+					//else
+						//textElement = new TiXmlText("");
+					if (id.GetType() == ValueID::ValueType_Decimal)
+					{
+						uint8 precision;
+						if (Manager::Get()->GetValueFloatPrecision(id, &precision))
+							fprintf(stderr, "node = %d id = %d value = %s precision = %d\n", i, j, str.c_str(), precision);
+					//valueElement->LinkEndChild(textElement);
+				    }
+				//string str_zwave;
+				//if (Manager::Get()->GetValueAsString(id, &str_zwave)){
+				//Devices["DeviceID's"]["deviceID"]["zWaveproperties"]["value"] = str_zwave.c_str();}
+				Devices["Information"]["zWaveproperties"]["A-GenericValues"]["label"] = Manager::Get()->GetValueLabel(id).c_str();
+				Devices["Information"]["zWaveproperties"]["A-GenericValues"]["type"] = valueTypeStr(id.GetType());
+				//break;
+				}
+				//MyValue *vals = nodes[i]->getValue(6);
+				//ValueID id = vals->getId();
+				if (strcmp(cclassStr(id.GetCommandClassId()), "BATTERY") == 0 )
+				{
+				//string str_battery;
+				//Devices["DeviceID's"]["deviceID"]["zWaveproperties"]["battery"]["CommandClass"] = cclassStr(id.GetCommandClassId());
+				if (Manager::Get()->GetValueAsString(id, &str))
+				{
+				Devices["Information"]["zWaveproperties"]["battery"]["value"] = str.c_str();
+				}
+				Devices["Information"]["zWaveproperties"]["battery"]["units"] = Manager::Get()->GetValueUnits(id).c_str();
+				Devices["Information"]["zWaveproperties"]["battery"]["label"] = Manager::Get()->GetValueLabel(id).c_str();
+				Devices["Information"]["zWaveproperties"]["battery"]["type"] = valueTypeStr(id.GetType());
+				}
+				if (strcmp(cclassStr(id.GetCommandClassId()), "SENSOR MULTILEVEL") == 0 && strcmp(Manager::Get()->GetValueLabel(id).c_str(), "Temperature") == 0)
+				{
+				//string str_battery;
+				//Devices["DeviceID's"]["deviceID"]["zWaveproperties"]["battery"]["CommandClass"] = cclassStr(id.GetCommandClassId());
+				if (Manager::Get()->GetValueAsString(id, &str))
+				{
+				Devices["Information"]["zWaveproperties"]["temperature"]["value"] = str.c_str();
+				}
+				Devices["Information"]["zWaveproperties"]["temperature"]["units"] = Manager::Get()->GetValueUnits(id).c_str();
+				Devices["Information"]["zWaveproperties"]["temperature"]["label"] = Manager::Get()->GetValueLabel(id).c_str();
+				Devices["Information"]["zWaveproperties"]["temprature"]["type"] = valueTypeStr(id.GetType());
+				}
+				if (strcmp(cclassStr(id.GetCommandClassId()), "SENSOR MULTILEVEL") == 0 && strcmp(Manager::Get()->GetValueLabel(id).c_str(), "Relative Humidity") == 0)
+				{
+				//string str_battery;
+				//Devices["DeviceID's"]["deviceID"]["zWaveproperties"]["battery"]["CommandClass"] = cclassStr(id.GetCommandClassId());
+				if (Manager::Get()->GetValueAsString(id, &str))
+				{
+				Devices["Information"]["zWaveproperties"]["humidity"]["value"] = str.c_str();
+				}
+				Devices["Information"]["zWaveproperties"]["humidity"]["units"] = Manager::Get()->GetValueUnits(id).c_str();
+				Devices["Information"]["zWaveproperties"]["humidity"]["label"] = Manager::Get()->GetValueLabel(id).c_str();
+				Devices["Information"]["zWaveproperties"]["humidity"]["type"] = valueTypeStr(id.GetType());
+				}
+				if (strcmp(cclassStr(id.GetCommandClassId()), "SENSOR MULTILEVEL") == 0 && strcmp(Manager::Get()->GetValueLabel(id).c_str(), "Ultraviolet") == 0)
+				{
+				//string str_battery;
+				//Devices["DeviceID's"]["deviceID"]["zWaveproperties"]["battery"]["CommandClass"] = cclassStr(id.GetCommandClassId());
+				if (Manager::Get()->GetValueAsString(id, &str))
+				{
+				Devices["Information"]["zWaveproperties"]["ultraviolet"]["value"] = str.c_str();
+				}
+				Devices["Information"]["zWaveproperties"]["ultraviolet"]["units"] = Manager::Get()->GetValueUnits(id).c_str();
+				Devices["Information"]["zWaveproperties"]["ultraviolet"]["label"] = Manager::Get()->GetValueLabel(id).c_str();
+				Devices["Information"]["zWaveproperties"]["ultraviolet"]["type"] = valueTypeStr(id.GetType());
+				}
+				if (strcmp(cclassStr(id.GetCommandClassId()), "SENSOR MULTILEVEL") == 0 && strcmp(Manager::Get()->GetValueLabel(id).c_str(), "Luminance") == 0)
+				{
+				//string str_battery;
+				//Devices["DeviceID's"]["deviceID"]["zWaveproperties"]["battery"]["CommandClass"] = cclassStr(id.GetCommandClassId());
+				if (Manager::Get()->GetValueAsString(id, &str))
+				{
+				Devices["Information"]["zWaveproperties"]["luminance"]["value"] = str.c_str();
+				}
+				Devices["Information"]["zWaveproperties"]["luminance"]["units"] = Manager::Get()->GetValueUnits(id).c_str();
+				Devices["Information"]["zWaveproperties"]["luminance"]["label"] = Manager::Get()->GetValueLabel(id).c_str();
+				Devices["Information"]["zWaveproperties"]["luminance"]["type"] = valueTypeStr(id.GetType());
+				}
+				if ( (strcmp(cclassStr(id.GetCommandClassId()), "ALARM") == 0) && (strcmp(Manager::Get()->GetValueLabel(id).c_str(), "Burglar") == 0))
+				{
+				//string str_battery;
+				//Devices["DeviceID's"]["deviceID"]["zWaveproperties"]["battery"]["CommandClass"] = cclassStr(id.GetCommandClassId());
+				if (Manager::Get()->GetValueAsString(id, &str))
+				{
+					if (strcmp(str.c_str(), "3") == 0 )
+						Devices["Information"]["zWaveproperties"]["vibration"]["value"] = str.c_str();
+					else
+						Devices["Information"]["zWaveproperties"]["vibration"]["value"] = "0";
+				}
+				Devices["Information"]["zWaveproperties"]["vibration"]["units"] = Manager::Get()->GetValueUnits(id).c_str();
+				Devices["Information"]["zWaveproperties"]["vibration"]["label"] = Manager::Get()->GetValueLabel(id).c_str();
+				Devices["Information"]["zWaveproperties"]["vibration"]["type"] = valueTypeStr(id.GetType());
+				}
+				if ( strcmp(cclassStr(id.GetCommandClassId()), "METER") == 0 && strcmp(Manager::Get()->GetValueLabel(id).c_str(), "Energy") == 0)
+				{
+				//string str_battery;
+				//Devices["DeviceID's"]["deviceID"]["zWaveproperties"]["battery"]["CommandClass"] = cclassStr(id.GetCommandClassId());
+				if (Manager::Get()->GetValueAsString(id, &str))
+				{
+				Devices["Information"]["zWaveproperties"]["Energy"]["value"] = str.c_str();
+				}
+				Devices["Information"]["zWaveproperties"]["Energy"]["units"] = Manager::Get()->GetValueUnits(id).c_str();
+				Devices["Information"]["zWaveproperties"]["Energy"]["label"] = Manager::Get()->GetValueLabel(id).c_str();
+				Devices["Information"]["zWaveproperties"]["Energy"]["type"] = valueTypeStr(id.GetType());
+				}
+				if ( strcmp(cclassStr(id.GetCommandClassId()), "METER") == 0 && strcmp(Manager::Get()->GetValueLabel(id).c_str(), "Current") == 0)
+				{
+				//string str_battery;
+				//Devices["DeviceID's"]["deviceID"]["zWaveproperties"]["battery"]["CommandClass"] = cclassStr(id.GetCommandClassId());
+				if (Manager::Get()->GetValueAsString(id, &str))
+				{
+				Devices["Information"]["zWaveproperties"]["Current"]["value"] = str.c_str();
+				}
+				Devices["Information"]["zWaveproperties"]["Current"]["units"] = Manager::Get()->GetValueUnits(id).c_str();
+				Devices["Information"]["zWaveproperties"]["Current"]["label"] = Manager::Get()->GetValueLabel(id).c_str();
+				Devices["Information"]["zWaveproperties"]["Current"]["type"] = valueTypeStr(id.GetType());
+				}
+				if ( strcmp(cclassStr(id.GetCommandClassId()), "METER") == 0 && strcmp(Manager::Get()->GetValueLabel(id).c_str(), "Previous Reading") == 0)
+				{
+				//string str_battery;
+				//Devices["DeviceID's"]["deviceID"]["zWaveproperties"]["battery"]["CommandClass"] = cclassStr(id.GetCommandClassId());
+				if (Manager::Get()->GetValueAsString(id, &str))
+				{
+				Devices["Information"]["zWaveproperties"]["Previous Reading"]["value"] = str.c_str();
+				}
+				Devices["Information"]["zWaveproperties"]["Previous Reading"]["units"] = Manager::Get()->GetValueUnits(id).c_str();
+				Devices["Information"]["zWaveproperties"]["Previous Reading"]["label"] = Manager::Get()->GetValueLabel(id).c_str();
+				Devices["Information"]["zWaveproperties"]["Previous Reading"]["type"] = valueTypeStr(id.GetType());
+				}
+				if ( strcmp(cclassStr(id.GetCommandClassId()), "METER") == 0 && strcmp(Manager::Get()->GetValueLabel(id).c_str(), "Power") == 0)
+				{
+				//string str_battery;
+				//Devices["DeviceID's"]["deviceID"]["zWaveproperties"]["battery"]["CommandClass"] = cclassStr(id.GetCommandClassId());
+				if (Manager::Get()->GetValueAsString(id, &str))
+				{
+				Devices["Information"]["zWaveproperties"]["Power"]["value"] = str.c_str();
+				}
+				Devices["Information"]["zWaveproperties"]["Power"]["units"] = Manager::Get()->GetValueUnits(id).c_str();
+				Devices["Information"]["zWaveproperties"]["Power"]["label"] = Manager::Get()->GetValueLabel(id).c_str();
+				Devices["Information"]["zWaveproperties"]["Power"]["type"] = valueTypeStr(id.GetType());
+				}
+				if ( strcmp(cclassStr(id.GetCommandClassId()), "METER") == 0 && strcmp(Manager::Get()->GetValueLabel(id).c_str(), "Voltage") == 0)
+				{
+				//string str_battery;
+				//Devices["DeviceID's"]["deviceID"]["zWaveproperties"]["battery"]["CommandClass"] = cclassStr(id.GetCommandClassId());
+				if (Manager::Get()->GetValueAsString(id, &str))
+				{
+				Devices["Information"]["zWaveproperties"]["Voltage"]["value"] = str.c_str();
+				}
+				Devices["Information"]["zWaveproperties"]["Voltage"]["units"] = Manager::Get()->GetValueUnits(id).c_str();
+				Devices["Information"]["zWaveproperties"]["Voltage"]["label"] = Manager::Get()->GetValueLabel(id).c_str();
+				Devices["Information"]["zWaveproperties"]["Voltage"]["type"] = valueTypeStr(id.GetType());
+				}
+				}
+				event["status_code"] = MHD_HTTP_OK;
+				event[str_nodes] = Devices;
+				Devices.clear();
+			}
+			i++;
+			if(nodeID_new == nodeID && nodeID != 0){break;}
+		}
+		z = 0;
+	}
+	pthread_mutex_unlock(&nlock);
+	device_details_event:
+	Json::StyledWriter styledWriter;
+    strncpy(fntemp, "/tmp/ozwcp.poll.XXXXXX", sizeof(fntemp));
+    fn = mktemp(fntemp);
+    if (fn == NULL)
+            return MHD_YES;
+    strncat(fntemp, ".json", sizeof(fntemp));
+    //doc.SaveFile(fn);
+    file_id.open(fn);
+    file_id << styledWriter.write(event);
+    std::cout << event << std::endl;
+    file_id.close();
+
+    ret = web_send_file(conn, fn, MHD_HTTP_OK, true);
+    return ret;
+}
+
